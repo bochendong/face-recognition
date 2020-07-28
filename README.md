@@ -106,9 +106,30 @@ def resize_image(image, height = IMAGE_SIZE, width = IMAGE_SIZE):
 The model is defined as:
 <p align="center">
 	<img src="https://github.com/bochendong/face-recognition/raw/master/image/model.png"
-        width="400" height="1000">
+        width="600" height="1000">
 	<p align="center">
 </p>
+
+The data argumentation is also implemented:
+```Python
+def train(self, dataset, batch_size = 20, nb_epoch = 10, data_augmentation = True):        
+        sgd = SGD(lr = 0.01, decay = 1e-6, momentum = 0.9, nesterov = True)   
+        self.model.compile(loss='categorical_crossentropy',optimizer=sgd, metrics=['accuracy']) 
+       
+        if not data_augmentation:            
+            self.model.fit(dataset.train_images, dataset.train_labels,
+                           batch_size = batch_size, nb_epoch = nb_epoch,
+                           validation_data = (dataset.valid_images, dataset.valid_labels),
+                           shuffle = True)
+        else:            
+            datagen = ImageDataGenerator(
+                featurewise_center = False, samplewise_center  = False, featurewise_std_normalization = False, samplewise_std_normalization = False, zca_whitening = False, rotation_range = 20, width_shift_range  = 0.2, height_shift_range = 0.2, horizontal_flip = True, vertical_flip = False)         
+            datagen.fit(dataset.train_images)                        
+            self.model.fit_generator(datagen.flow(dataset.train_images, dataset.train_labels, batch_size = batch_size),
+                                     samples_per_epoch = dataset.train_images.shape[0],
+                                     nb_epoch = nb_epoch,
+                                     validation_data = (dataset.valid_images, dataset.valid_labels))
+```
 ## Predict
 
 Example:
