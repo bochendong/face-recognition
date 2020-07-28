@@ -1,5 +1,9 @@
 # face-recognition
 Face recognition using OpenCV and tensorflow
+* [Data collection](https://github.com/bochendong/face-recognition#data_collection)
+* [Load data](https://github.com/bochendong/face-recognition#load_data)
+* [Resize image](https://github.com/bochendong/face-recognition#resize_image)
+* [Predict](https://github.com/bochendong/face-recognition#predict)
 
 ## Data collection
 Call opencv's API function to realize face recognition
@@ -113,25 +117,33 @@ The model is defined as:
 The data argumentation is also implemented:
 ```Python
 def train(self, dataset, batch_size = 20, nb_epoch = 10, data_augmentation = True):        
-        sgd = SGD(lr = 0.01, decay = 1e-6, momentum = 0.9, nesterov = True)   
-        self.model.compile(loss='categorical_crossentropy',optimizer=sgd, metrics=['accuracy']) 
+    sgd = SGD(lr = 0.01, decay = 1e-6, momentum = 0.9, nesterov = True)   
+    self.model.compile(loss='categorical_crossentropy',optimizer=sgd, metrics=['accuracy']) 
        
-        if not data_augmentation:            
-            self.model.fit(dataset.train_images, dataset.train_labels,
+    if not data_augmentation:            
+        self.model.fit(dataset.train_images, dataset.train_labels,
                            batch_size = batch_size, nb_epoch = nb_epoch,
                            validation_data = (dataset.valid_images, dataset.valid_labels),
                            shuffle = True)
-        else:            
-            datagen = ImageDataGenerator(
-                featurewise_center = False, samplewise_center  = False, featurewise_std_normalization = False, samplewise_std_normalization = False, zca_whitening = False, rotation_range = 20, width_shift_range  = 0.2, height_shift_range = 0.2, horizontal_flip = True, vertical_flip = False)         
-            datagen.fit(dataset.train_images)                        
-            self.model.fit_generator(datagen.flow(dataset.train_images, dataset.train_labels, batch_size = batch_size),
-                                     samples_per_epoch = dataset.train_images.shape[0],
-                                     nb_epoch = nb_epoch,
-                                     validation_data = (dataset.valid_images, dataset.valid_labels))
+    else:            
+        datagen = ImageDataGenerator(featurewise_center = False, samplewise_center  = False, featurewise_std_normalization = False, samplewise_std_normalization = False, zca_whitening = False, rotation_range = 20, width_shift_range  = 0.2, height_shift_range = 0.2, horizontal_flip = True, vertical_flip = False)         
+        datagen.fit(dataset.train_images)                        
+        self.model.fit_generator(datagen.flow(dataset.train_images, dataset.train_labels, batch_size = batch_size), samples_per_epoch = dataset.train_images.shape[0], nb_epoch = nb_epoch, validation_data = (dataset.valid_images, dataset.valid_labels))
+```
+After the model is trained, we save the model to the specified path
+```Python
+model.save_model(file_path = './model/bochendong.face.model.h5')
 ```
 ## Predict
 
+Eventually, the camera will capture anyone who can be identified and will display his name
+```Python
+image = frame[y - 10: y + h + 10, x - 10: x + w + 10]
+faceID = model.face_predict(image)   
+if faceID == 0:                                                        
+	cv2.rectangle(frame, (x - 10, y - 10), (x + w + 10, y + h + 10), color, thickness = 2)
+        cv2.putText(frame,'Bochen Dong', (x + 30, y + 30),cv2.FONT_HERSHEY_SIMPLEX,1, (255,0,255), 2)  
+```
 Example:
 <p align="center">
 	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure2.JPG"
