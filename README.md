@@ -103,12 +103,17 @@ def resize_image(image, height = IMAGE_SIZE, width = IMAGE_SIZE):
 ```
 
 ## Train Model
-
+The model is defined as:
+<p align="center">
+	<img src="https://github.com/bochendong/face-recognition/raw/master/image/model.png"
+        width="400" height="1000">
+	<p align="center">
+</p>
 ## Predict
 
 Example:
 <p align="center">
 	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure2.JPG"
-        width="900" height="500">
+        width="600" height="500">
 	<p align="center">
 </p>
