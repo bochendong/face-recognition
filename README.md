@@ -47,7 +47,7 @@ Examples:
 	<p align="center">
 </p>
 <p align="center">
-	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure12.png"
+	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure2.JPG"
         width="1500" height="600">
 	<p align="center">
 </p>
