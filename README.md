@@ -101,8 +101,14 @@ def resize_image(image, height = IMAGE_SIZE, width = IMAGE_SIZE):
     constant = cv2.copyMakeBorder(image, top , bottom, left, right, cv2.BORDER_CONSTANT, value = [0, 0, 0])
     return cv2.resize(constant, (height, width))
 ```
+
+## Train Model
+
+## Predict
+
+Example:
 <p align="center">
 	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure2.JPG"
-        width="1500" height="600">
+        width="900" height="500">
 	<p align="center">
 </p>
