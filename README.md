@@ -40,3 +40,14 @@ while cap.isOpened():
       if c & 0xFF == ord('q'):
           break   
 ```
+Examples:
+<p align="center">
+	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure1.png"
+        width="1500" height="600">
+	<p align="center">
+</p>
+<p align="center">
+	<img src="https://github.com/bochendong/face-recognition/raw/master/image/figure12.png"
+        width="1500" height="600">
+	<p align="center">
+</p>
