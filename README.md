@@ -51,11 +51,13 @@ Examples:
         width="1500" height="600">
 	<p align="center">
 </p>
+
 ## Load data
 The main function of this step is to read the picture from the specified path and resize it to 64 * 64
+
 ### Load data from the specified path
+
 ```Python
-# Cat face recognition
 images = []
 labels = []
 def read_path(path_name):    
@@ -77,7 +79,9 @@ def load_dataset(path_name):
     labels = np.array([0 if label.endswith('Bochen_Dong') else 1 for label in labels])    
     return images, labels
 ```
+
 ### Resize image
+
 ```Python
 IMAGE_SIZE = 64
 def resize_image(image, height = IMAGE_SIZE, width = IMAGE_SIZE):
